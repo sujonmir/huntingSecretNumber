@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hunting Secret Number Game</title>
+	<link rel="icon" href="https://sujonmir.com/wp-content/uploads/2019/10/Sujon-Mir.jpg" sizes="16*16">
+	<style>
+		body{
+			padding: 200px 0;
+			background: #FFEFBA;  /* fallback for old browsers */
+			background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);  /* Chrome 10-25, Safari 5.1-6 */
+			background: linear-gradient(to right, #FFFFFF, #FFEFBA); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+		}
+		h1{font-size: 72px;}
+		button{
+			font-size: 32px;
+			cursor: pointer;
+			/* padding: 10px 40px; */
+		}
+		.glow-on-hover {
+		    width: 220px;
+		    height: 50px;
+		    border: none;
+		    outline: none;
+		    color: #fff;
+		    background: #111;
+		    cursor: pointer;
+		    position: relative;
+		    z-index: 0;
+		    border-radius: 10px;
+		}
+
+		.glow-on-hover:before {
+		    content: '';
+		    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+		    position: absolute;
+		    top: -2px;
+		    left:-2px;
+		    background-size: 400%;
+		    z-index: -1;
+		    filter: blur(5px);
+		    width: calc(100% + 4px);
+		    height: calc(100% + 4px);
+		    animation: glowing 20s linear infinite;
+		    opacity: 0;
+		    transition: opacity .3s ease-in-out;
+		    border-radius: 10px;
+		}
+
+		.glow-on-hover:active {
+		    color: #000
+		}
+
+		.glow-on-hover:active:after {
+		    background: transparent;
+		}
+
+		.glow-on-hover:hover:before {
+		    opacity: 1;
+		}
+
+		.glow-on-hover:after {
+		    z-index: -1;
+		    content: '';
+		    position: absolute;
+		    width: 100%;
+		    height: 100%;
+		    background: #111;
+		    left: 0;
+		    top: 0;
+		    border-radius: 10px;
+		}
+
+		@keyframes glowing {
+		    0% { background-position: 0 0; }
+		    50% { background-position: 400% 0; }
+		    100% { background-position: 0 0; }
+		}
+		@media (max-width: 575px){
+			body{
+				padding: 0 0 50px 0;
+			}
+		}
+	</style>
+</head>
+<body onload="color()" id="bg">
+	<center><h1 id="headline">Hunting Secret Number Game</h1></center>
+	<center><a href="index.html">
+		<button class="glow-on-hover" type="button">Play Again</button>
+	</a></center>
+	
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script>
+		//color generating
+		setInterval (function color(){
+			var char= ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f']
+			var charLength= char.length
+			var ranNum1= Math.floor(Math.random()*charLength)
+			var ranNum2= Math.floor(Math.random()*charLength)
+			var ranNum3= Math.floor(Math.random()*charLength)
+			var ranNum4= Math.floor(Math.random()*charLength)
+			var ranNum5= Math.floor(Math.random()*charLength)
+			var ranNum6= Math.floor(Math.random()*charLength)
+			var hexColor='#'+char[ranNum1]+char[ranNum2]+char[ranNum3]+char[ranNum4]+char[ranNum5]+char[ranNum6]
+			document.getElementById("headline").style.color = hexColor;
+			
+
+		},500);
+		// generate secret number is a random integer between 1 and 12
+		const MIN = 1;
+		const MAX = 100;
+
+		let secretNumber = Math.floor(Math.random() * (MAX - MIN + 1)) + MIN;
+
+		let guesses = 0; // for storing the number of guesses
+		let hint = ''; // for storing hint
+		let number = 0;
+		do {
+		    // get input from user
+		    let input = prompt(`Please enter a number for hunting secret number between ${MIN} and ${MAX}` + hint);
+		    // get the integer
+		    number = parseInt(input);
+		    // increase the number of guesses
+		    guesses++;
+		    // check input number with the secret number
+		    // provide hint if needed
+		    if (number > secretNumber) {
+		        hint = ', and less than ' + number;
+		    } else if (number < secretNumber) {
+		        hint = ', and greater than ' + number;
+		    } else if(number == secretNumber) {
+		        alert(`Congratulations! you're correct after ${guesses} guess(es).`);
+		    }
+		} while (number != secretNumber);
+
+
+		
+
+	</script>
+
+</body>
+</html>
